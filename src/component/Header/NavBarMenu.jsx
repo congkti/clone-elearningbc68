@@ -111,7 +111,7 @@ const NavBarMenu = ({ openNav }) => {
       >
         <li>
           <Dropdown
-            overlayClassName="menuHome"
+            overlayClassName={`menuHome ${openNav ? "isMobile" : ""}`}
             menu={{
               items: itemsMenuHome,
             }}

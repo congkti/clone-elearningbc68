@@ -215,6 +215,13 @@
       }
     }
   }
+
+  // menuHome on Mobile
+  &.isMobile {
+    ul.ant-dropdown-menu {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  }
 }
 
 // mini cart
@@ -422,10 +429,19 @@
 // 2xl-screen
 @media (min-width: 1536px) {
 }
-.headerNavMenu_mobile .ant-popover-inner-content {
-  height: 50vh;
-  overflow-y: auto;
+.headerNavMenu_mobile {
+  .ant-popover-inner-content {
+    height: 50vh;
+    overflow-y: auto;
+    ul.dropDown_menu {
+      li svg {
+        width: 10px;
+        padding: 0 5px;
+      }
+    }
+  }
 }
+
 .headerNavMenu_mobile_overlay {
   position: fixed;
   top: 0;

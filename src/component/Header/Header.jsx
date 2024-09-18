@@ -8,14 +8,12 @@ import LoginPage from "../../pages/LoginPage/LoginPage";
 import Register from "../../pages/Register/Register";
 import NavBarMobile from "./NavBarMobile";
 import IconLogo from "./IconLogo";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setStatusModal } from "../../redux/headerSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const [isFixedHeader, setIsFixedHeader] = useState(false);
-  // const [isLogin, setIsLogin] = useState(false);
-  // const [isRegister, setIsRegister] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,6 +32,7 @@ const Header = () => {
     };
   }, []);
 
+  // Đưa trạng thái Modal User lên redux
   const openLogin = () => {
     dispatch(
       setStatusModal({
@@ -43,17 +42,13 @@ const Header = () => {
     );
   };
   const closeLogin = () => {
-    // setIsLogin(false);
     dispatch(
       setStatusModal({
         isLogin: false,
       })
     );
   };
-
   const openRegister = () => {
-    // setIsRegister(true);
-    // setIsLogin(false);
     dispatch(
       setStatusModal({
         isLogin: false,
@@ -62,7 +57,6 @@ const Header = () => {
     );
   };
   const closeRegister = () => {
-    // setIsRegister(false);
     dispatch(
       setStatusModal({
         isRegister: false,
