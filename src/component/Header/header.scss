@@ -422,3 +422,18 @@
 // 2xl-screen
 @media (min-width: 1536px) {
 }
+.headerNavMenu_mobile .ant-popover-inner-content {
+  height: 50vh;
+  overflow-y: auto;
+}
+.headerNavMenu_mobile_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: 0;
+  z-index: 50;
+  transition: all 0.5s;
+}

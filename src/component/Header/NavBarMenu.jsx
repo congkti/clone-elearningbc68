@@ -102,38 +102,43 @@ const itemsMenuHome = [
   },
 ];
 
-const NavBarMenu = () => {
+const NavBarMenu = ({ openNav }) => {
   return (
     <ul className="dropDown_menu flex items-center gap-1 lg:gap-4">
-      <li>
-        <Dropdown
-          overlayClassName="menuHome"
-          menu={{
-            items: itemsMenuHome,
-          }}
-          placement="bottom"
-          arrow
-        >
-          <a href="javascript:void(0)" className="">
-            <span>EduMall</span>
-            <FontAwesomeIcon icon={faChevronDown} />
-          </a>
-        </Dropdown>
-      </li>
-      <li>
-        <Dropdown
-          menu={{
-            items,
-          }}
-          placement="bottom"
-          arrow
-        >
-          <a href="javascript:void(0)">
-            <span>Become an Instructor</span>
-            <FontAwesomeIcon icon={faChevronDown} />
-          </a>
-        </Dropdown>
-      </li>
+      <Space
+        direction={openNav ? "vertical" : "horizontal"}
+        size={openNav ? "large" : ""}
+      >
+        <li>
+          <Dropdown
+            overlayClassName="menuHome"
+            menu={{
+              items: itemsMenuHome,
+            }}
+            placement="bottom"
+            arrow={!openNav}
+          >
+            <a href="javascript:void(0)" className="">
+              <span>EduMall</span>
+              <FontAwesomeIcon icon={faChevronDown} />
+            </a>
+          </Dropdown>
+        </li>
+        <li>
+          <Dropdown
+            menu={{
+              items,
+            }}
+            placement="bottom"
+            arrow={!openNav}
+          >
+            <a href="javascript:void(0)">
+              <span>Become an Instructor</span>
+              <FontAwesomeIcon icon={faChevronDown} />
+            </a>
+          </Dropdown>
+        </li>
+      </Space>
     </ul>
   );
 };

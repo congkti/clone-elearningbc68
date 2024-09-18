@@ -6,13 +6,16 @@ import NavBarMenu from "./NavBarMenu";
 import CartPopOver from "./CartPopOver";
 import LoginPage from "../../pages/LoginPage/LoginPage";
 import Register from "../../pages/Register/Register";
-import { MenuOutlined } from "@ant-design/icons";
 import NavBarMobile from "./NavBarMobile";
+import IconLogo from "./IconLogo";
+import { useDispatch, useSelector } from "react-redux";
+import { setStatusModal } from "../../redux/headerSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const [isFixedHeader, setIsFixedHeader] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
-  const [isRegister, setIsRegister] = useState(false);
+  // const [isLogin, setIsLogin] = useState(false);
+  // const [isRegister, setIsRegister] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,19 +35,39 @@ const Header = () => {
   }, []);
 
   const openLogin = () => {
-    setIsLogin(true);
-    setIsRegister(false);
+    dispatch(
+      setStatusModal({
+        isLogin: true,
+        isRegister: false,
+      })
+    );
   };
   const closeLogin = () => {
-    setIsLogin(false);
+    // setIsLogin(false);
+    dispatch(
+      setStatusModal({
+        isLogin: false,
+      })
+    );
   };
 
   const openRegister = () => {
-    setIsRegister(true);
-    setIsLogin(false);
+    // setIsRegister(true);
+    // setIsLogin(false);
+    dispatch(
+      setStatusModal({
+        isLogin: false,
+        isRegister: true,
+      })
+    );
   };
-  const closeRegiter = () => {
-    setIsRegister(false);
+  const closeRegister = () => {
+    // setIsRegister(false);
+    dispatch(
+      setStatusModal({
+        isRegister: false,
+      })
+    );
   };
 
   return (
@@ -57,11 +80,7 @@ const Header = () => {
         <div className="header_wrapper flex items-center justify-center md:justify-between">
           <div className="header_logo mr-7">
             <a href="/">
-              <img
-                className="h-[32px] w-[148px]"
-                src="./assets/svg/logo.svg"
-                alt=""
-              />
+              <IconLogo />
             </a>
           </div>
 
@@ -90,13 +109,11 @@ const Header = () => {
                 Sign Up
               </button>
               <LoginPage
-                isModalOpen={isLogin} // Trạng thái mở/đóng modal
                 handleCancel={closeLogin} // Hàm đóng modal
                 openRegister={openRegister} // Chuyển sang Modal đăng ký
               />
               <Register
-                isModalOpen={isRegister} // Trạng thái mở/đóng modal
-                handleCancel={closeRegiter} // Hàm đóng modal
+                handleCancel={closeRegister} // Hàm đóng modal
                 openLogin={openLogin} // Chuyển sang Modal đăng nhập
               />
             </div>
