@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
 import InputCustom from "../../component/Input/InputCustom";
+import { useSelector } from "react-redux";
 
-const Register = ({ isModalOpen, handleCancel, openLogin }) => {
+const Register = ({ handleCancel, openLogin }) => {
   // const [isModalOpen, setIsModalOpen] = useState(false);
   // const showModal = () => {
   //   setIsModalOpen(true);
@@ -13,6 +14,8 @@ const Register = ({ isModalOpen, handleCancel, openLogin }) => {
   // const handleCancel = () => {
   //   setIsModalOpen(false);
   // };
+  const { setStatusModal } = useSelector((store) => store.headerSlice);
+
   return (
     <>
       {/* <button
@@ -25,7 +28,7 @@ const Register = ({ isModalOpen, handleCancel, openLogin }) => {
         width="670px"
         wrapClassName="header_user_modal"
         title="Sign Up"
-        open={isModalOpen}
+        open={setStatusModal.isRegister}
         onOk={handleCancel}
         onCancel={handleCancel}
         footer={null}
@@ -40,7 +43,7 @@ const Register = ({ isModalOpen, handleCancel, openLogin }) => {
               openLogin();
             }}
           >
-            Register
+            Login
           </button>
         </p>
 

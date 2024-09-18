@@ -15,7 +15,7 @@ import { pathDefault } from "../../common/path";
 import * as yup from "yup";
 import { notiValidate } from "../../common/notiValidate";
 
-const LoginPage = ({ isModalOpen, handleCancel, openRegister }) => {
+const LoginPage = ({ handleCancel, openRegister }) => {
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
   // const showModal = () => {
@@ -29,6 +29,7 @@ const LoginPage = ({ isModalOpen, handleCancel, openRegister }) => {
   // };
 
   const dispatch = useDispatch();
+  const { setStatusModal } = useSelector((store) => store.headerSlice);
   const { handleNotification } = useContext(NotificationContext);
   const navigate = useNavigate();
 
@@ -88,10 +89,11 @@ const LoginPage = ({ isModalOpen, handleCancel, openRegister }) => {
       {/* <button onClick={showModal} className="btn hover:text-blue-600">
         Log In
       </button> */}
+
       <Modal
         wrapClassName="header_user_modal"
         title="Login"
-        open={isModalOpen}
+        open={setStatusModal.isLogin}
         onOk={handleCancel}
         onCancel={handleCancel}
         cancelButtonProps={{ disabled: "true" }}
