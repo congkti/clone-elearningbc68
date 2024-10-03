@@ -15,11 +15,11 @@ import {
 const items = [
   {
     key: "1",
-    label: <Link to={"#url"}>Join with our team</Link>,
+    label: <Link to={"/"}>Join with our team</Link>,
   },
   {
     key: "2",
-    label: <Link to={"#url"}>Our Instructors</Link>,
+    label: <Link to={"/"}>Our Instructors</Link>,
   },
 ];
 
@@ -29,7 +29,7 @@ const itemsMenuHome = [
     label: (
       <div className="flex items-center">
         <FontAwesomeIcon icon={faUsers} />
-        <Link to={"#url"} className="font-bold">
+        <Link to={"/"} className="font-bold">
           About us
           <p className="font-light">
             Access a Modern Education & Pursue Your Passion
@@ -43,7 +43,7 @@ const itemsMenuHome = [
     label: (
       <div className="flex items-center">
         <FontAwesomeIcon icon={faCalendarDays} />
-        <Link to={"#url"} className="font-bold">
+        <Link to={"/"} className="font-bold">
           Events
           <p className="font-light">Inspiring Events We Host</p>
         </Link>
@@ -55,7 +55,7 @@ const itemsMenuHome = [
     label: (
       <div className="flex items-center">
         <FontAwesomeIcon icon={faBullhorn} />
-        <Link to={"#url"} className="font-bold">
+        <Link to={"/"} className="font-bold">
           Media
           <p className="font-light">What the Press Says About Us</p>
         </Link>
@@ -67,7 +67,7 @@ const itemsMenuHome = [
     label: (
       <div className="flex items-center">
         <FontAwesomeIcon icon={faFilePen} />
-        <Link to={"#url"} className="font-bold">
+        <Link to={"/"} className="font-bold">
           Blog
           <p className="font-light">Explore great articles on our Blog</p>
         </Link>
@@ -79,7 +79,7 @@ const itemsMenuHome = [
     label: (
       <div className="flex items-center">
         <FontAwesomeIcon icon={faCircleInfo} />
-        <Link to={"#url"} className="font-bold">
+        <Link to={"/"} className="font-bold">
           Support
           <p className="font-light">
             Reach out to us for assistance or inquiries
@@ -93,7 +93,7 @@ const itemsMenuHome = [
     label: (
       <div className="flex items-center">
         <FontAwesomeIcon icon={faAddressCard} />
-        <Link to={"#url"} className="font-bold">
+        <Link to={"/"} className="font-bold">
           Contact us
           <p className="font-light">Keep In Touch With Us</p>
         </Link>
@@ -118,10 +118,10 @@ const NavBarMenu = ({ openNav }) => {
             placement="bottom"
             arrow={!openNav}
           >
-            <a href="javascript:void(0)" className="">
+            <Link>
               <span>EduMall</span>
               <FontAwesomeIcon icon={faChevronDown} />
-            </a>
+            </Link>
           </Dropdown>
         </li>
         <li>
@@ -132,10 +132,10 @@ const NavBarMenu = ({ openNav }) => {
             placement="bottom"
             arrow={!openNav}
           >
-            <a href="javascript:void(0)">
+            <Link>
               <span>Become an Instructor</span>
               <FontAwesomeIcon icon={faChevronDown} />
-            </a>
+            </Link>
           </Dropdown>
         </li>
       </Space>

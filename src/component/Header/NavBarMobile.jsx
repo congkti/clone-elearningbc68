@@ -6,10 +6,12 @@ import NavBarMenu from "./NavBarMenu";
 import IconLogo from "./IconLogo";
 import LoginPage from "../../pages/LoginPage/LoginPage";
 import Register from "../../pages/Register/Register";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setStatusModal } from "../../redux/headerSlice";
 
 const NavBarMobile = () => {
+  const { user } = useSelector((state) => state.authSlice);
+  const isLoggedIn = !!user;
   const dispatch = useDispatch();
   const [openNav, setOpenNav] = useState(false);
   const hideNav = () => {
@@ -61,29 +63,33 @@ const NavBarMobile = () => {
             className="cursor-pointer p-1 h-[24px] w-[24px] rounded text-[16px] text-[#0071dc] bg-white opacity-60 hover:opacity-100 duration-300"
           />
         </div>
-        <div className="block sm:hidden">
+        <div className="header_search block sm:hidden">
           <FormSearchBar />
         </div>
         <div className="">
           <NavBarMenu openNav={openNav} />
         </div>
       </Space>
-      <Space className="flex justify-center bg-[#ccc] p-3 absolute bottom-0 left-0 w-full">
-        <button onClick={openLogin} className="btn btn-primary">
-          Log In
-        </button>
-        <button onClick={openRegister} className="btn btn-primary">
-          Sign Up
-        </button>
-        <LoginPage
-          handleCancel={closeLogin} // Hàm đóng modal
-          openRegister={openRegister} // Chuyển sang Modal đăng ký
-        />
-        <Register
-          handleCancel={closeRegister} // Hàm đóng modal
-          openLogin={openLogin} // Chuyển sang Modal đăng nhập
-        />
-      </Space>
+      {isLoggedIn ? null : (
+        <>
+          <Space className="flex justify-center bg-[#ccc] p-3 absolute bottom-0 left-0 w-full">
+            <button onClick={openLogin} className="btn btn-primary">
+              Log In
+            </button>
+            <button onClick={openRegister} className="btn btn-primary">
+              Sign Up
+            </button>
+            <LoginPage
+              handleCancel={closeLogin} // Hàm đóng modal
+              openRegister={openRegister} // Chuyển sang Modal đăng ký
+            />
+            <Register
+              handleCancel={closeRegister} // Hàm đóng modal
+              openLogin={openLogin} // Chuyển sang Modal đăng nhập
+            />
+          </Space>
+        </>
+      )}
     </Space>
   );
 
@@ -105,7 +111,7 @@ const NavBarMobile = () => {
       </Popover>
       <div
         className={`headerNavMenu_mobile_overlay ${
-          openNav ? "opacity-80 z-50" : "opacity-0 -z-50"
+          openNav ? "opacity-80 z-50 block" : "opacity-0 -z-50 hidden"
         }`}
       ></div>
     </>

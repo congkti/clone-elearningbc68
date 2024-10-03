@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Button, Modal } from "antd";
-import Register from "../Register/Register";
+import React, { useContext } from "react";
+import { Modal } from "antd";
 import InputCustom from "../../component/Input/InputCustom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle, faSquareFacebook } from "@fortawesome/free-brands-svg-icons";
@@ -10,28 +9,16 @@ import { setLocalStorage } from "../../util/util";
 import { useDispatch, useSelector } from "react-redux";
 import { setValueUser } from "../../redux/authSlice";
 import { NotificationContext } from "../../App";
-import { useNavigate } from "react-router-dom";
-import { pathDefault } from "../../common/path";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { notiValidate } from "../../common/notiValidate";
 
 const LoginPage = ({ handleCancel, openRegister }) => {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // const showModal = () => {
-  //   setIsModalOpen(true);
-  // };
-  // const handleOk = () => {
-  //   setIsModalOpen(false);
-  // };
-  // const handleCancel = () => {
-  //   setIsModalOpen(false);
-  // };
-
   const dispatch = useDispatch();
   const { setStatusModal } = useSelector((store) => store.headerSlice);
   const { handleNotification } = useContext(NotificationContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     handleSubmit,
@@ -51,19 +38,15 @@ const LoginPage = ({ handleCancel, openRegister }) => {
       try {
         // call api
         const result = await authService.signIn(values);
-        console.log(result.data);
         // lưu local storage và redux store
         setLocalStorage("user", result.data);
         dispatch(setValueUser(result.data));
         // chuyển hướng người dùng
-        handleNotification(
-          "Đăng nhập thành công. Bạn sẽ chuyển đến Homepage",
-          "success"
-        );
+        handleNotification("Đăng nhập thành công", "success");
         handleCancel();
         setTimeout(() => {
-          navigate(pathDefault.homePage);
-        }, 2000);
+          navigate(location.pathname);
+        }, 1000);
       } catch (error) {
         console.log(error);
         handleNotification(
@@ -133,9 +116,10 @@ const LoginPage = ({ handleCancel, openRegister }) => {
             type="password"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.matKhau}
+            // value={values.matKhau}
             errors={errors.matKhau}
             touched={touched.matKhau}
+            enableShowPassBtn={true}
           />
           <div className="flex justify-between">
             <div className="flex">
@@ -150,7 +134,7 @@ const LoginPage = ({ handleCancel, openRegister }) => {
               </label>
             </div>
             <div className="modal-description">
-              <a href="javascript:void(0)">Forgot your password?</a>
+              <Link to={"/"}>Forgot your password?</Link>
             </div>
           </div>
 
