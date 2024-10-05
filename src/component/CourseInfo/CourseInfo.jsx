@@ -4,18 +4,21 @@ import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
+import { setStatusModal } from "../../redux/headerSlice";
 import { quanLyKhoaHocService } from "../../service/quanLyKhoaHoc.service";
 import { useNavigate } from "react-router-dom";
 import { NotificationContext } from "../../App";
+import { useParams } from "react-router-dom";
 // import Course from "../Course/Course";
 
-const CourseInfo = ({ detailCourse,maKhoaHoc }) => {
+const CourseInfo = ({ detailCourse }) => {
+  const { maKhoaHoc } = useParams();
   const { handleNotification } = useContext(NotificationContext);
   const { user } = useSelector((state) => state.authSlice);
-  const [courseEnroll, setCourseEnroll] = useState({
-    maKhoaHoc: maKhoaHoc,
-    taiKhoan: user.taiKhoan,
-  });
+  // const { setStatusModal } = useSelector((state) => state.headerSlice);
+  // console.log(sets)
+  const dispatch = useDispatch();
+  const [courseEnroll, setCourseEnroll] = useState();
   const navigate = useNavigate();
   const details = [
     { label: "Level", value: "Beginner" },
@@ -24,8 +27,14 @@ const CourseInfo = ({ detailCourse,maKhoaHoc }) => {
     { label: "Subject", value: "Data Modeling" },
     { label: "Language", value: "Vietnamese" },
   ];
-  const dispatch = useDispatch();
-
+  const openLogin = () => {
+    dispatch(
+      setStatusModal({
+        isLogin: true,
+        isRegister: false,
+      })
+    );
+  };
   const handleAddToCart = () => {
     dispatch(addToCart(detailCourse));
   };
@@ -67,7 +76,17 @@ const CourseInfo = ({ detailCourse,maKhoaHoc }) => {
       {/* Add to Cart Button */}
       <button
         className="w-full my-2 bg-blue-600 text-white font-semibold py-2 rounded-md flex items-center justify-center hover:bg-blue-700"
-        onClick={handleAddToCart}
+        onClick={() => {
+          if (user) {
+            handleAddToCart();
+          } else {
+            handleNotification(
+              "Tính năng cần phải được đăng nhập mới thực hiện được",
+              "warn"
+            );
+            openLogin();
+          }
+        }}
       >
         <FontAwesomeIcon icon={faBasketShopping} className="mx-3" />
         Add to cart
@@ -75,20 +94,32 @@ const CourseInfo = ({ detailCourse,maKhoaHoc }) => {
       <button
         className="w-full my-2 bg-green-600 text-white font-semibold py-2 rounded-md flex items-center justify-center hover:bg-green-600/90"
         onClick={() => {
-          quanLyKhoaHocService
-            .postGhiDanhKhoaHoc(user.accessToken, courseEnroll)
-            .then((res) => {
-              handleNotification("Ghi danh thành công", "success");
-              setIsModalOpenEnroll(false);
-              dispatch(getValueCourseAPI());
-            })
-            .catch((err) => {
-              handleNotification(err.response.data, "error");
-            });
+          if (user) {
+            quanLyKhoaHocService
+              .postDangkyKhoaHoc(user.accessToken, {
+                maKhoaHoc,
+                taiKhoan: user.taiKhoan,
+              })
+              .then((res) => {
+                console.log(res)
+                handleNotification(res.data, "success");
+                dispatch(getValueCourseAPI());
+              })
+              .catch((err) => {
+                handleNotification(err.response.data, "error");
+              });
+          } else {
+            handleNotification(
+              "Tính năng cần phải được đăng nhập mới thực hiện được",
+              "warn"
+            );
+            openLogin();
+          }
         }}
       >
         Enroll
       </button>{" "}
+      
     </div>
   );
 };

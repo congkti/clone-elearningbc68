@@ -5,10 +5,7 @@ import { Breadcrumb, Rate } from "antd";
 import CourseInfo from "../../component/CourseInfo/CourseInfo";
 import CheckIcon from "../../component/Icon/CheckIcon";
 import DateToWords from "../../component/DateToWords/DateToWords";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDispatch } from "react-redux";
-import Loading from "../Loading/Loading";
+import WithLoading from "../../component/WithLoading/WithLoading";
 const DetailCourse = () => {
   const { maKhoaHoc } = useParams();
   const learningObjectives = [
@@ -39,18 +36,12 @@ const DetailCourse = () => {
     maKhoaHoc: "",
     taiKfhoan: "",
   };
-  if (!detailCourse) {
-    return <><Loading/></>;
-  }
+  
   console.log(detailCourse);
-  // const dispatch = useDispatch();
-
-  // const handleAddToCart = () => {
-  //   dispatch(addToCart(detailCourse));
-  // };
+ 
   return (
-    <>
-      <div className="container pl-4">
+    <WithLoading>
+      <div className="container mx-auto pb-10 px-3">
         <Breadcrumb
           className=" my-4"
           items={[
@@ -60,18 +51,18 @@ const DetailCourse = () => {
             {
               title: (
                 <Link
-                  to={`/course-catelogies/${detailCourse.danhMucKhoaHoc.maDanhMucKhoahoc}`}
+                  to={`/course-catelogies/${detailCourse?.danhMucKhoaHoc.maDanhMucKhoahoc}`}
                 >
-                  {detailCourse.danhMucKhoaHoc.maDanhMucKhoahoc}
+                  {detailCourse?.danhMucKhoaHoc.maDanhMucKhoahoc}
                 </Link>
               ),
             },
             {
               title: (
                 <Link
-                  to={`/course-catelogies/${detailCourse.danhMucKhoaHoc.maDanhMucKhoahoc}`}
+                  to={`/course-catelogies/${detailCourse?.danhMucKhoaHoc.maDanhMucKhoahoc}`}
                 >
-                  {detailCourse.danhMucKhoaHoc.tenDanhMucKhoaHoc}
+                  {detailCourse?.danhMucKhoaHoc.tenDanhMucKhoaHoc}
                 </Link>
               ),
             },
@@ -90,7 +81,7 @@ const DetailCourse = () => {
 
               <div className="flex sm:items-center flex-wrap flex-col sm:flex-row gap-4 text-sm text-gray-600 mt-2 border-y  py-3">
                 <span className="pr-4 sm:border-r-2">
-                  <strong>{detailCourse.nguoiTao?.hoTen}</strong>
+                  <strong>{detailCourse?.nguoiTao?.hoTen}</strong>
                 </span>
                 <span className="pr-4 sm:border-r-2">
                   Last Updated:
@@ -98,8 +89,8 @@ const DetailCourse = () => {
                 </span>
                 <div className="flex items-center pr-4 sm:border-r-2">
                   <span>
-                    <strong>4.52</strong>/5{" "}
-                    <Rate allowHalf defaultValue={4.52} disabled={true} />
+                    <strong>4.5</strong>/5{" "}
+                    <Rate allowHalf defaultValue={4.5} disabled />
                   </span>
                   <span className="ml-2">
                     ({detailCourse?.luotXem} reviews)
@@ -123,9 +114,7 @@ const DetailCourse = () => {
                 which must be completed before it can be accessed:
               </p>
               <div className="mt-4">
-                <div
-                  className="inline-block text-blue-600 bg-gray-100 px-4 py-2 rounded-md"
-                >
+                <div className="inline-block text-blue-600 bg-gray-100 px-4 py-2 rounded-md">
                   Artificial Intelligence & Machine Learning
                 </div>
               </div>
@@ -187,12 +176,12 @@ const DetailCourse = () => {
           </div>
           <div className=" my-5 col-span-2 md:col-span-1  ">
             <div className=" sticky top-4 md:top-16 bg-white p-4  col-span-1">
-              <CourseInfo detailCourse={detailCourse} maKhoaHoc={maKhoaHoc}/>
+              <CourseInfo detailCourse={detailCourse} maKhoaHoc={maKhoaHoc} />
             </div>
           </div>
         </div>
       </div>
-    </>
+    </WithLoading>
   );
 };
 

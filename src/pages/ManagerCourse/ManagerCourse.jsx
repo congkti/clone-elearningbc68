@@ -12,6 +12,7 @@ import InputCustom from "../../component/Input/InputCustom";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { pathChildren } from "../../common/path";
+import WithLoading from "../../component/WithLoading/WithLoading";
 
 const ManagerCourse = () => {
   const [courseValue, setCourseValue] = useState({
@@ -280,14 +281,14 @@ const ManagerCourse = () => {
       },
     },
     {
-      title: "Action",
+      title: "Hành Động",
       key: "action",
       render: (_, record) => {
         console.log(record);
         return (
-          <Space size="middle" className="">
+          <Space size="small" className="">
             <button
-              className="bg-green-500 text-white py-2 px-3  rounded-md duration-300 hover:bg-green-500/80 "
+              className="bg-green-500 text-white py-2 px-2  rounded-md duration-300 hover:bg-green-500/80 "
               onClick={() => navigate(`/admin/ghi-danh-khoa-hoc/${record.maKhoaHoc}`)}
               
             >
@@ -308,13 +309,13 @@ const ManagerCourse = () => {
                     handleNotification(err.response.data, "error");
                   });
               }}
-              className=" bg-red-500 text-white py-2 px-5 rounded-md duration-300 hover:bg-red-500/90 "
+              className=" bg-red-500 text-white py-2 px-4 rounded-md duration-300 hover:bg-red-500/90 "
             >
               Xóa{" "}
             </button>
             <button
               onClick={() => showModal(record)}
-              className="bg-yellow-500 text-white py-2 px-5 rounded-md duration-300 hover:bg-yellow-500/90"
+              className="bg-yellow-500 text-white py-2 px-4 rounded-md duration-300 hover:bg-yellow-500/90"
             >
               Sửa
             </button>
@@ -434,7 +435,7 @@ const ManagerCourse = () => {
                   </div>
                   <div>
                     <button
-                      className="px-5 py-2 bg-black text-white rounded"
+                      className="px-4 py-2 bg-black text-white rounded"
                       type="submit"
                     >
                       Update khóa Học
@@ -450,19 +451,19 @@ const ManagerCourse = () => {
   ];
 
   return (
-    <>
+    <WithLoading>
       <div className="flex justify-between items-center mb-5">
         <h2 className="text-4xl font-bold">Quản lý Khóa học </h2>
         <button
           onClick={() => navigate(pathChildren.createCourse)}
-          className="bg-blue-500 text-white py-2 px-5 rounded-md hover:bg-blue-500/90"
+          className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-500/90"
         >
           Thêm Khóa học{" "}
         </button>
       </div>
 
       <Table columns={columns} dataSource={listCourse} rowKey="maKhoaHoc" />
-    </>
+    </WithLoading>
   );
 };
 export default ManagerCourse;

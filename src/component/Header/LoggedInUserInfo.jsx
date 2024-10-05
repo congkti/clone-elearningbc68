@@ -7,6 +7,8 @@ import {
   PoweroffOutlined,
   TeamOutlined,
   ToolFilled,
+  ToolOutlined,
+  ToolTwoTone,
   UnorderedListOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -16,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeItemLocalStorage } from "../../util/util";
 import { setValueUser } from "../../redux/authSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMedal } from "@fortawesome/free-solid-svg-icons";
+import { faMedal , faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { NotificationContext } from "../../App";
 import { pathDefault } from "../../common/path";
 
@@ -54,14 +56,14 @@ const LoggedInUserInfo = () => {
       : null,
 
     {
-      label: <Link to={pathDefault.homePage}>Your Message</Link>,
+      label: <Link to={pathDefault.homePage}>My Message</Link>,
       key: "1",
       icon: <MailOutlined />,
     },
     {
       label: (
         <Link to={`/personal-infornation/${user.taiKhoan}?tab=2`}>
-          Your Information
+          MY Information
         </Link>
       ),
       key: "2",
@@ -70,10 +72,19 @@ const LoggedInUserInfo = () => {
     {
       label: (
         <Link to={`/personal-infornation/${user.taiKhoan}?tab=3`}>
-          Your Course
+          My Cart
         </Link>
       ),
       key: "3",
+      icon:  <FontAwesomeIcon icon={faBasketShopping} />,
+    },
+    {
+      label: (
+        <Link to={`/personal-infornation/${user.taiKhoan}?tab=4`}>
+          My Course
+        </Link>
+      ),
+      key: "4",
       icon: <FolderOpenOutlined />,
     },
     {

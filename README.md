@@ -15,9 +15,10 @@ Phiên bản node là v20.14.0
   - Thư viện lottie-react cho việc chạy animation (done)
   - Thư viện fontansome cho việc lấy icon  (done)
   - Thư viện react-slick cho việc chay carousel(done)
-
-
-
+  - Thư viện lottie-react cho việc sữ dụng animaition
+  - Thư viện react-scroll-to-top cho việc back to top
+  - Thư viện react-highlight-words dùng để làm nổi bật các từ trong một đoạn văn bản lớn
+  - Thư viện parallax-js dùng để chạy anhimation trong banner
 Ghi chú về các thư mục trong dự án
 
 - assets : chứa các file phương tiện như âm thanh, hình ảnh, animation,font
@@ -29,3 +30,20 @@ Ghi chú về các thư mục trong dự án
 - service : chứa các setup về xử lí api
 - template : chứa các component đóng vai trò là mẫu layout được sử dụng ở nhiều trang
 - utils : chứa các hàm xử lí sử dụng ở nhiều thành phần trong dự án
+
+TK test
+- TKGV
+TK :hunggv1
+MK :123456s@das213D
+- TKHV
+TK :aaa
+MK :Duy676820
+
+link trang tham khảo: https://htmldemo.net/edumall/edumall/index.html
+
+
+
+
+
+
+
