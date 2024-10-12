@@ -67,7 +67,7 @@ const CreateCourse = () => {
           console.log(formData);
 
           quanLyKhoaHocService
-            .postUploadHinhAnhKhoaHoc(formData, user.accessToken)
+            .postCapNhatKhoaHoc(formData)
             .then((res) => {
               handleNotification(
                 "Tạo khóa học thành công! Chuyển hướng về trang quản lý khoá học",
@@ -104,7 +104,7 @@ const CreateCourse = () => {
         .number()
         .required(notiValidate.empty)
         .max(100, "Tối đa là 100"),
-    //   hinhAnh: yup.string().nullable(),
+      //   hinhAnh: yup.string().nullable(),
       maNhom: yup.string().required(notiValidate.empty),
       ngayTao: yup
         .string()
@@ -192,10 +192,10 @@ const CreateCourse = () => {
               Mã danh mục khóa học
             </label>
             <select
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               name="maDanhMucKhoaHoc"
               value={values.maDanhMucKhoaHoc}
               onChange={handleChange}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               onBlur={handleBlur}
             >
               <option> Vui lòng chọn mã danh mục khóa học</option>
