@@ -20,7 +20,8 @@ import { setValueUser } from "../../redux/authSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedal, faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { NotificationContext } from "../../App";
-import { pathDefault } from "../../common/path";
+import { pathChildren, pathDefault } from "../../common/path";
+import useResponsive from "../../hooks/useResponsive";
 
 const LoggedInUserInfo = () => {
   const { handleNotification } = useContext(NotificationContext);
@@ -29,6 +30,11 @@ const LoggedInUserInfo = () => {
   const isLoggedIn = !!user;
 
   const dispatch = useDispatch();
+  const isResponsive = useResponsive({
+    sm: 640,
+    md: 768,
+    lg: 1024,
+  });
 
   const handleLogout = () => {
     if (isLoggedIn && confirm("Bạn muốn Đăng xuất?")) {
@@ -46,7 +52,7 @@ const LoggedInUserInfo = () => {
     user.maLoaiNguoiDung === "GV"
       ? {
           label: (
-            <Link to={pathDefault.admin} className="font-semibold">
+            <Link to={pathChildren.managerUser} className="font-semibold ">
               Go to Admin Page
             </Link>
           ),
@@ -63,7 +69,7 @@ const LoggedInUserInfo = () => {
     {
       label: (
         <Link to={`/personal-infornation/${user.taiKhoan}?tab=2`}>
-          My Information
+          My Profile
         </Link>
       ),
       key: "2",
@@ -141,7 +147,7 @@ const LoggedInUserInfo = () => {
         to={`/personal-infornation/${user.taiKhoan}`}
       >
         <Space size={"small"}>
-          <span className="font-semibold hover:text-[#0071dc] hidden lg:inline-block">
+          <span className="font-semibold hover:text-[#0071dc] hidden xl:inline-block">
             {user.hoTen}
           </span>
 

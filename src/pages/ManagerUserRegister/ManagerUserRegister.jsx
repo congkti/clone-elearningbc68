@@ -52,7 +52,7 @@ const ManagerUserRegister = () => {
       key: "tenKhoaHoc",
     },
     {
-      title: "Chờ Xác Nhận",
+      title: "Hành Động",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
@@ -87,7 +87,7 @@ const ManagerUserRegister = () => {
       key: "tenKhoaHoc",
     },
     {
-      title: "Chờ Xác Nhận",
+      title: "Hành động",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
@@ -198,7 +198,7 @@ const ManagerUserRegister = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [newXacThuc]);
+  }, [newXacThuc, newRegister]);
 
   // Lấy danh sách khoá học đã xét duyệt
   useEffect(() => {
