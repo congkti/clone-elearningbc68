@@ -41,7 +41,6 @@ const Register = ({ handleCancel, openLogin }) => {
           maNhom: "GP01",
         })
         .then((res) => {
-          // console.log(res);
           handleNotification(
             "Đăng ký thành công! Bạn sẽ chuyển về Home page",
             "success"
@@ -54,7 +53,6 @@ const Register = ({ handleCancel, openLogin }) => {
           }, 2000);
         })
         .catch((err) => {
-          // console.log(err);
           handleNotification(
             `ERROR! ${err.message && ":: " + err.message} ${
               err.response.data && ":: " + err.response.data
@@ -130,7 +128,7 @@ const Register = ({ handleCancel, openLogin }) => {
 
         <form
           autoComplete="off" // tắt tự động điền
-          noValidate //chặn validate tự động của trình duyệt
+          noValidate={true} //chặn validate tự động của trình duyệt
           onSubmit={handleSubmit}
           className="grid grid-cols-2 gap-x-5 gap-y-6 pb-5"
         >
@@ -225,6 +223,7 @@ const Register = ({ handleCancel, openLogin }) => {
           <button
             className="w-full bg-blue-500 text-white text-[16px] font-semibold px-5 py-4 rounded-lg hover:bg-yellow-500 hover:text-[#252525] col-span-2"
             type="submit"
+            formNoValidate
           >
             Register
           </button>

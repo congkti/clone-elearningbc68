@@ -12,6 +12,7 @@ import { NotificationContext } from "../../App";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { notiValidate } from "../../common/notiValidate";
+import FeatureInDev from "../NotFound404/FeatureInDev";
 
 const LoginPage = ({ handleCancel, openRegister }) => {
   const dispatch = useDispatch();
@@ -34,12 +35,10 @@ const LoginPage = ({ handleCancel, openRegister }) => {
       matKhau: "",
     },
     onSubmit: async (values) => {
-      // console.log(values);
       try {
-        // call api
         const result = await authService.signIn(values);
         // lưu local storage và redux store
-        // console.log(result);
+ 
         setLocalStorage("user", result.data);
         dispatch(setValueUser(result.data));
         // chuyển hướng người dùng
@@ -49,7 +48,6 @@ const LoginPage = ({ handleCancel, openRegister }) => {
           navigate(location.pathname);
         }, 1000);
       } catch (error) {
-        // console.log(error);
         handleNotification(`${error.response.data}`, "error");
       }
     },
@@ -146,23 +144,32 @@ const LoginPage = ({ handleCancel, openRegister }) => {
             <span>or Log-in with</span>
           </p>
           <div className="flex justify-evenly ">
-            <button
-              type="button"
+            <FeatureInDev
+              typeLabel="button"
               className="font-bold text-lg flex items-center gap-3 border-2 px-7 py-3 rounded-md hover:border-[#252525]"
-            >
-              <FontAwesomeIcon
-                icon={faSquareFacebook}
-                className="h-5 text-blue-800"
-              />
-              Facebook
-            </button>
-            <button
-              type="button"
+              contentLabel={
+                <>
+                  <FontAwesomeIcon
+                    icon={faSquareFacebook}
+                    className="h-5 text-blue-800"
+                  />
+                  Facebook
+                </>
+              }
+            />
+            <FeatureInDev
+              typeLabel="button"
               className="font-bold text-lg flex items-center gap-3 border-2 px-7 py-3 rounded-md hover:border-[#252525]"
-            >
-              <FontAwesomeIcon icon={faGoogle} className="h-5 text-red-600" />
-              Google
-            </button>
+              contentLabel={
+                <>
+                  <FontAwesomeIcon
+                    icon={faGoogle}
+                    className="h-5 text-red-600"
+                  />
+                  Google
+                </>
+              }
+            />
           </div>
         </form>
       </Modal>

@@ -19,7 +19,6 @@ const CreateCourse = () => {
   const [uploadImage, setUploadImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [errorImage, setErrorImage] = useState("");
-  //   console.log(uploadImage)
   const {
     handleChange,
     handleSubmit,
@@ -48,7 +47,6 @@ const CreateCourse = () => {
       taiKhoanNguoiTao: user.taiKhoan,
     },
     onSubmit: (value) => {
-      console.log(value);
 
       quanLyKhoaHocService
         .postThemKhoaHoc(user.accessToken, value)
@@ -64,7 +62,6 @@ const CreateCourse = () => {
               formData.append(key, values[key]);
             }
           }
-          console.log(formData);
 
           quanLyKhoaHocService
             .postCapNhatKhoaHoc(formData)
@@ -74,8 +71,6 @@ const CreateCourse = () => {
                 "success"
               );
               dispatch(getValueCourseAPI());
-              //   handleReset();
-              //   console.log(formData)
               if (res.data.hinhAnhUrl) {
                 setImageUrl(res.data.hinhAnhUrl);
               }
@@ -84,12 +79,10 @@ const CreateCourse = () => {
               }, 2000);
             })
             .catch((err) => {
-              console.log(err);
               handleNotification(err.response.data, "error");
             });
         })
         .catch((err) => {
-          console.log(err);
           handleNotification(err.response.data, "error");
         });
     },
@@ -99,11 +92,14 @@ const CreateCourse = () => {
       biDanh: yup.string().required(notiValidate.empty),
       tenKhoaHoc: yup.string().required(notiValidate.empty),
       moTa: yup.string().required(notiValidate.empty),
-      luotXem: yup.number().required(notiValidate.empty),
-      danhGia: yup
-        .number()
+      luotXem: yup
+        .string()
         .required(notiValidate.empty)
-        .max(100, "Tối đa là 100"),
+        .matches(/^\d+$/, "Chỉ nhập số >= 0"),
+      danhGia: yup
+        .string()
+        .required(notiValidate.empty)
+        .matches(/^(100|[1-9]?[0-9])$/, "Chỉ nhập số từ 0 đến 100"),
       //   hinhAnh: yup.string().nullable(),
       maNhom: yup.string().required(notiValidate.empty),
       ngayTao: yup
@@ -117,7 +113,6 @@ const CreateCourse = () => {
       maDanhMucKhoaHoc: yup.string().required(notiValidate.empty),
     }),
   });
-  // console.log(errors);
   const handleImageChange = (e) => {
     const image = e.target.files[0];
     if (image) {
@@ -139,7 +134,7 @@ const CreateCourse = () => {
   };
   return (
     <>
-      <form id="create-course-form" onSubmit={handleSubmit}>
+      <form noValidate id="create-course-form" onSubmit={handleSubmit}>
         <h2 className="text-4xl font-bold">THÊM KHÓA HỌC</h2>
         <div className="flex flex-wrap">
           <InputCustom
@@ -279,7 +274,8 @@ const CreateCourse = () => {
               value={values.moTa}
               onChange={handleChange}
               onBlur={handleBlur}
-              onTouchCancel={touched}
+              touched={touched}
+              // touched="true"
             ></textarea>
             {errors && touched && (
               <p className="text-red-500 block">{errors.moTa}</p>
@@ -316,6 +312,7 @@ const CreateCourse = () => {
               className="px-5 py-2 bg-black text-white rounded"
               type="submit"
               // disabled={!isValid || isSubmitting}
+              formNoValidate
             >
               Tạo khóa Học
             </button>

@@ -65,7 +65,6 @@ const CourseCard = ({ course }) => {
                 taiKhoan: user.taiKhoan,
               })
               .then((res) => {
-                // console.log(res);
                 handleNotification(res.data, "success");
                 dispatch(getValueCourseAPI());
               })
@@ -86,16 +85,18 @@ const CourseCard = ({ course }) => {
     </div>
   );
   return (
-    <div className=" rounded-lg overflow-hidden shadow-lg bg-white">
-      {/* Course Image */}{" "}
+    <div className=" rounded-lg overflow-hidden shadow-xl bg-white">
       <Popover content={content}>
         <div className="relative">
           <img
             className="w-full h-auto md:h-48"
-            src={course.hinhAnh} // Replace with actual image
+            src={course.hinhAnh || "/png/course/hinhAnhCourse.png"}
+            onError={(e) => {
+              e.target.onerror = null; 
+              e.target.src = "/png/course/hinhAnhCourse.png"; 
+            }}
             alt="Course"
           />
-          {/* Free Label */}
           <span className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-md">
             Featured
           </span>

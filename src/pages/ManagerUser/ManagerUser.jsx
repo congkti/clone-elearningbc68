@@ -78,7 +78,6 @@ const ManagerUser = () => {
                 )}`
               )
             }
-            // onClick={() => console.log(record)}
             className="text-white deleteBtn py-2 px-3 bg-blue-500 rounded-md font-bold hover:bg-blue-600"
           >
             Ghi Danh
@@ -146,7 +145,6 @@ const ManagerUser = () => {
       maNhom: yup.string().required("Loại mã Nhóm như: GP01, GP02..."),
     }),
     onSubmit: (values) => {
-      console.log("formik values", formik.values);
 
       nguoiDungService
         .putThongTinNguoiDung(values, accessToken)
@@ -155,7 +153,7 @@ const ManagerUser = () => {
           handleNotification("Cập nhật thành công!", "success");
           formik.resetForm();
           setNewUserArr(true);
-          handleCancel()
+          handleCancel();
         })
         .catch((err) => {
           console.log(err);
@@ -185,7 +183,6 @@ const ManagerUser = () => {
       nguoiDungService
         .layDanhSachNguoiDung()
         .then((res) => {
-          // console.log(res.data);
           let userArray = res.data.map((item, index) => {
             return {
               key: index,
@@ -207,12 +204,10 @@ const ManagerUser = () => {
 
   // Edit user infor
   const handleEdit = (taiKhoan) => {
-    console.log("taiKhoan", taiKhoan);
     setIsDisable(true);
     nguoiDungService
       .timKiemNguoiDung(taiKhoan)
       .then((res) => {
-        console.log("res.data[0]", res.data[0]);
         // setEditData(res.data[0]);
         let userInfo = res.data[0];
         userInfo = {
@@ -225,8 +220,6 @@ const ManagerUser = () => {
           ...formik.values,
           ...userInfo,
         });
-        // console.log("userInfo", userInfo);
-        // console.log("editData", editData);
         setHideBtn(true);
       })
       .catch((err) => {
@@ -238,16 +231,13 @@ const ManagerUser = () => {
 
   // delete tài khoản
   const handleDelete = (taiKhoan) => {
-    console.log("userData", userData);
     nguoiDungService
       .deleteUser(accessToken, taiKhoan)
       .then((res) => {
-        console.log(res);
         handleNotification("Delete thành công!", "success");
         setNewUserArr(true);
       })
       .catch((error) => {
-        console.log(error.response.data);
         handleNotification(`${error.response.data}`, "error");
       });
   };
@@ -266,7 +256,6 @@ const ManagerUser = () => {
       nguoiDungService
         .timKiemNguoiDung(searchText)
         .then((res) => {
-          console.log(res.data);
           setUserData(res.data);
         })
         .catch((err) => {
@@ -279,21 +268,15 @@ const ManagerUser = () => {
 
   // handle submit
   const handleUserCreate = () => {
-    console.log(formik.values);
-    // setIsDisable(false);
-
     nguoiDungService
       .themNguoiDung(accessToken, formik.values)
       .then((res) => {
-        console.log(res);
         handleNotification("Tạo mới thành công!", "success");
         formik.resetForm();
         setNewUserArr(true);
-        handleCancel()
-
+        handleCancel();
       })
       .catch((err) => {
-        console.log(err.response.data);
         handleNotification(`${err.response.data}`, "error");
       });
   };
@@ -318,7 +301,7 @@ const ManagerUser = () => {
             <input
               className="w-2/3 border border-1 px-2 py-3 rounded-md mr-3"
               type="text"
-              placeHolder={"Nhập tài khoản hoặc tên người dùng"}
+              placeholder="Nhập tài khoản hoặc tên người dùng"
               onChange={handleSearch}
             />
             <button className=" bg-gray-500 py-2 px-4 text-white rounded-md font-bold hover:bg-gray-600 inline-block">
@@ -424,7 +407,7 @@ const ManagerUser = () => {
               touched={formik.touched}
               errors={formik.errors?.maNhom}
             />
-          
+
             <button
               onClick={handleUserCreate}
               type="button"

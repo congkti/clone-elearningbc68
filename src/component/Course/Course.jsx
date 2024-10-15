@@ -47,7 +47,6 @@ const Course = () => {
     setActiveTab(maDanhMuc);
   };
 
-  // console.log(listCourseCategory);
   const sortedCourses = (courses) => {
     return courses.sort((a, b) => b.luotXem - a.luotXem).slice(0, 5);
   };
@@ -102,11 +101,12 @@ const Course = () => {
                 placement="topLeft"
                 arrow
               >
-                <Button>
-                  <div className="category_icon">
+                {/* <Button> */}
+                  <div className="category_icon flex space-x-2">
+                    <span>Catelogy</span>
                     <IconCategory />
                   </div>
-                </Button>
+                {/* </Button> */}
               </Dropdown>
             </div>
           )}
