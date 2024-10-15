@@ -21,25 +21,23 @@ Phiên bản node là v20.14.0
 
 
 ### Ghi chú về các thư mục trong dự án:
-- *assets*: chứa các file phương tiện như âm thanh, hình ảnh, animation,font
-- *common*: chứa các giá trị tĩnh được sử dụng ở nhiều thành phần trong dự án
-- *components*: chứa các components tái sử dụng trong dự án
-- *hooks*: chứa các custom hooks được sử dụng
-- *pages*: chứa các component đóng vai trò là page của các trang trên web
-- *redux*: chứa các slice và store của redux toolkit
-- *service*: chứa các setup về xử lí api
-- *template*: chứa các component đóng vai trò là mẫu layout được sử dụng ở nhiều trang
-- *utils*: chứa các hàm xử lí sử dụng ở nhiều thành phần trong dự án
+- **assets**: chứa các file phương tiện như âm thanh, hình ảnh, animation,font
+- **common**: chứa các giá trị tĩnh được sử dụng ở nhiều thành phần trong dự án
+- **components**: chứa các components tái sử dụng trong dự án
+- **hooks**: chứa các custom hooks được sử dụng
+- **pages**: chứa các component đóng vai trò là page của các trang trên web
+- **redux**: chứa các slice và store của redux toolkit
+- **service**: chứa các setup về xử lí api
+- **template**: chứa các component đóng vai trò là mẫu layout được sử dụng ở nhiều trang
+- **utils**: chứa các hàm xử lí sử dụng ở nhiều thành phần trong dự án
 
 ### TK test
-``
 - TKGV
 	- TK: hunggv1
 	- MK: 123456s@das213D
 - TKHV
 	- TK: congbui
 	- MK: 123456@HoaHong
-``
 
 Link trang tham khảo: https://htmldemo.net/edumall/edumall/index.html
 
