@@ -18,20 +18,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const ManagerCourse = () => {
-  // const [courseValue, setCourseValue] = useState({
-  //   maKhoaHoc: "",
-  //   biDanh: "",
-  //   tenKhoaHoc: "",
-  //   moTa: "",
-  //   luotXem: 0,
-  //   danhGia: 0,
-  //   hinhAnh: "",
-  //   maNhom: "",
-  //   ngayTao: "",
-  //   maDanhMucKhoahoc: "",
-  //   taiKhoanNguoiTao: "",
-  // });
-
   const [listCourse, setListCourse] = useState([]);
   const [uploadImage, setUploadImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
@@ -151,6 +137,7 @@ const ManagerCourse = () => {
           searchWords={[searchText]}
           autoEscape
           textToHighlight={text ? text.toString() : ""}
+          highlightTag="phuongduy"
         />
       ) : (
         text
@@ -164,8 +151,7 @@ const ManagerCourse = () => {
       .then((res) => {
         dispatch(setListCourse(res.data));
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
   useEffect(() => {
     getAllKhoaHoc();
@@ -307,7 +293,6 @@ const ManagerCourse = () => {
       title: "Hình Ảnh",
       dataIndex: "hinhAnh",
       key: "hinhAnh",
-      // ...getColumnSearchProps("ngayTao"),
       render: (_, record) => {
         return <img src={record.hinhAnh} alt="Null" className="w-20" />;
       },
@@ -333,9 +318,22 @@ const ManagerCourse = () => {
       dataIndex: "nguoiTao",
       key: "nguoiTao",
       ...getColumnSearchProps("nguoiTao"),
-      render: (text) => {
-        return <p>{text.taiKhoan}</p>;
-      },
+      render: (text, record) =>
+        searchedColumn === "nguoiTao" ? (
+          <Highlighter
+            highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+            searchWords={[searchText]}
+            autoEscape
+            textToHighlight={
+              record?.nguoiTao?.hoTen ? record.nguoiTao.hoTen.toString() : ""
+            }
+            highlightTag="phuongduy"
+          />
+        ) : (
+          <div>{record?.nguoiTao?.hoTen}</div>
+        ),
+      onFilter: (value, record) =>
+        record.nguoiTao?.hoTen.toLowerCase().includes(value.toLowerCase()),
     },
 
     {
@@ -345,7 +343,7 @@ const ManagerCourse = () => {
         return (
           <Space size="small" className="">
             <button
-              className="bg-green-500 text-white py-2 px-2  rounded-md duration-300 hover:bg-green-500/80 "
+              className="text-white  py-2 px-3 bg-blue-500 rounded-md font-bold hover:bg-blue-500/70z "
               onClick={() =>
                 navigate(`/admin/ghi-danh-khoa-hoc/${record.maKhoaHoc}`)
               }
@@ -367,13 +365,13 @@ const ManagerCourse = () => {
                     handleNotification(err.response.data, "error");
                   });
               }}
-              className=" bg-red-500 text-white py-2 px-4 rounded-md duration-300 hover:bg-red-500/90 "
+              className=" text-white enrollBtn py-2 px-3 bg-red-500 rounded-md font-bold hover:bg-red-500/70 "
             >
               Xóa{" "}
             </button>
             <button
               onClick={() => showModal(record)}
-              className="bg-yellow-500 text-white py-2 px-4 rounded-md duration-300 hover:bg-yellow-500/90"
+              className="text-white editBtn py-2 px-3 bg-orange-500 rounded-md font-bold hover:bg-orange-500/70"
             >
               Sửa
             </button>
@@ -536,28 +534,19 @@ const ManagerCourse = () => {
                     touched={touched.ngayTao}
                     errors={errors.ngayTao}
                   />
-
-                  <div className=" ">
-                    <label className="block mb-2 text-sm font-medium text-gray-900">
-                      Mã nhóm
-                    </label>
-                    <select
-                      name="maNhom"
-                      value={values.maNhom}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    >
-                      <option value="GP01">GP01</option>
-                      <option value="GP02">GP02</option>
-                      <option value="GP03">GP03</option>
-                      <option value="GP04">GP04</option>
-                      <option value="GP05">GP05</option>
-                    </select>
-                    {errors.maNhom && touched.maNhom && (
-                      <p className="text-red-500 block">{errors.maNhom}</p>
-                    )}
-                  </div>
+                  <InputCustom
+                    contentLabel={"Mã nhóm"}
+                    // placeHolder={"Vui lòng nhập mã khóa học"}
+                    // classWrapper="w-1/3  "
+                    name={"maNhom"}
+                    value={values.maNhom}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    touched={touched.maNhom}
+                    errors={errors.maNhom}
+                    disabled={true}
+                  />
+               
 
                   <div className="flex items-end justify-center mt-5">
                     <button

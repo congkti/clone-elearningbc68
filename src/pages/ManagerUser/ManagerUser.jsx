@@ -10,13 +10,12 @@ import { notiValidate } from "../../common/notiValidate";
 import { Navigate, useNavigate } from "react-router-dom";
 import { pathChildren } from "../../common/path";
 import { nguoiDungService } from "../../service/nguoiDung.service";
+import { removeVietnameseTones } from "../../util/util";
 
 const ManagerUser = () => {
   const [userData, setUserData] = useState([]);
   const [isDisable, setIsDisable] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [newDeleteUser, setNewDeleteUser] = useState(false);
-  const [updateUser, setUpdateUser] = useState(false);
   const [hideBtn, setHideBtn] = useState();
   const [newUserArr, setNewUserArr] = useState(false);
   const navigate = useNavigate();
@@ -78,13 +77,13 @@ const ManagerUser = () => {
                 )}`
               )
             }
-            className="text-white deleteBtn py-2 px-3 bg-blue-500 rounded-md font-bold hover:bg-blue-600"
+            className="text-white enrollBtn py-2 px-3 bg-blue-500 rounded-md font-bold hover:bg-blue-500/70"
           >
             Ghi Danh
           </button>
           <button
             onClick={() => handleDelete(record.taiKhoan)}
-            className="text-white deleteBtn py-2 px-3 bg-red-500 rounded-md font-bold hover:bg-red-600"
+            className="text-white deleteBtn py-2 px-3 bg-red-500 rounded-md font-bold hover:bg-red-500/70"
           >
             Xoá
           </button>
@@ -93,7 +92,7 @@ const ManagerUser = () => {
               handleEdit(record.taiKhoan);
               // setUpdateUser(true);
             }}
-            className="text-white editBtn py-2 px-3 bg-orange-500 rounded-md font-bold hover:bg-orange-600"
+            className="text-white editBtn py-2 px-3 bg-orange-500 rounded-md font-bold hover:bg-orange-500/70"
           >
             Sửa
           </button>
@@ -145,7 +144,6 @@ const ManagerUser = () => {
       maNhom: yup.string().required("Loại mã Nhóm như: GP01, GP02..."),
     }),
     onSubmit: (values) => {
-
       nguoiDungService
         .putThongTinNguoiDung(values, accessToken)
         .then((res) => {
@@ -221,6 +219,7 @@ const ManagerUser = () => {
           ...userInfo,
         });
         setHideBtn(true);
+        console.log("userInfo", userInfo);
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -228,6 +227,7 @@ const ManagerUser = () => {
 
     setIsModalOpen(true);
   };
+  console.log("formik.setValues", formik.values);
 
   // delete tài khoản
   const handleDelete = (taiKhoan) => {
@@ -245,7 +245,7 @@ const ManagerUser = () => {
   // handle Search
   const handleSearch = (e) => {
     let searchValue = e.target.value;
-    setSearchText(searchValue);
+    setSearchText(removeVietnameseTones(searchValue?.toLowerCase().trim()));
     setTriggerSearch((prev) => !prev);
   };
 
@@ -268,6 +268,11 @@ const ManagerUser = () => {
 
   // handle submit
   const handleUserCreate = () => {
+    // Kiểm tra xem form có hợp lệ hay không
+    if (!formik.isValid) {
+      handleNotification("Vui lòng kiểm tra lại các trường nhập!", "error");
+      return;
+    }
     nguoiDungService
       .themNguoiDung(accessToken, formik.values)
       .then((res) => {
@@ -328,7 +333,7 @@ const ManagerUser = () => {
               contentLabel={"Tài Khoản"}
               placeHolder={"Nhập Tài Khoản"}
               name={"taiKhoan"}
-              value={formik.values?.taiKhoan}
+              value={formik.values?.taiKhoan || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               touched={formik.touched}
@@ -340,7 +345,7 @@ const ManagerUser = () => {
               placeHolder={"Nhập Mật Khẩu"}
               name={"matKhau"}
               type="password"
-              value={formik.values?.matKhau}
+              value={formik.values?.matKhau || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               touched={formik.touched}
@@ -351,7 +356,7 @@ const ManagerUser = () => {
               contentLabel={"Họ Tên"}
               placeHolder={"Nhập Họ Tên"}
               name={"hoTen"}
-              value={formik.values?.hoTen}
+              value={formik.values?.hoTen || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               touched={formik.touched}
@@ -361,7 +366,7 @@ const ManagerUser = () => {
               contentLabel={"Số Điện Thoại"}
               placeHolder={"Nhập Số Điện Thoại"}
               name={"soDT"}
-              value={formik.values?.soDT}
+              value={formik.values?.soDT || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               touched={formik.touched}
@@ -371,7 +376,7 @@ const ManagerUser = () => {
               contentLabel={"Email"}
               placeHolder={"Nhập Email"}
               name={"email"}
-              value={formik.values?.email}
+              value={formik.values?.email || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               touched={formik.touched}
@@ -401,7 +406,7 @@ const ManagerUser = () => {
               contentLabel={"Nhóm Người Dùng"}
               placeHolder={"Nhập Mã Nhóm"}
               name={"maNhom"}
-              value={formik.values?.maNhom}
+              value={formik.values?.maNhom || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               touched={formik.touched}

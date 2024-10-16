@@ -92,8 +92,8 @@ const CourseCard = ({ course }) => {
             className="w-full h-auto md:h-48"
             src={course.hinhAnh || "/png/course/hinhAnhCourse.png"}
             onError={(e) => {
-              e.target.onerror = null; 
-              e.target.src = "/png/course/hinhAnhCourse.png"; 
+              e.target.onerror = null;
+              e.target.src = "/png/course/hinhAnhCourse.png";
             }}
             alt="Course"
           />
