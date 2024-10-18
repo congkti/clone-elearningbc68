@@ -6,7 +6,6 @@ import CourseInfo from "../../component/CourseInfo/CourseInfo";
 import CheckIcon from "../../component/Icon/CheckIcon";
 import DateToWords from "../../component/DateToWords/DateToWords";
 import WithLoading from "../../component/WithLoading/WithLoading";
-import { useSelector } from "react-redux";
 import CourseCard from "../../component/CourseCard/CourseCard";
 const DetailCourse = () => {
   const { maKhoaHoc } = useParams();
@@ -40,7 +39,7 @@ const DetailCourse = () => {
      data models.`,
   ];
   const [detailCourse, setDetailCourse] = useState(null);
-
+  const [listCourse, setListCourse] = useState([]);
   useEffect(() => {
     quanLyKhoaHocService
       .getThongTinKhoaHoc(maKhoaHoc)
@@ -52,13 +51,24 @@ const DetailCourse = () => {
       });
   }, [maKhoaHoc]);
 
-  const { listCourse } = useSelector((state) => state.courseSlice);
+  useEffect(() => {
+    if (listCourse.length === 0) {
+      quanLyKhoaHocService
+        .getDanhSachKhoaHoc()
+        .then((res) => {
+          setListCourse(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [listCourse]);
   const relatedCourses = listCourse
     .filter(
       (course) =>
-        course?.danhMucKhoaHoc.maDanhMucKhoahoc ==
+        course?.danhMucKhoaHoc.maDanhMucKhoahoc ===
           detailCourse?.danhMucKhoaHoc.maDanhMucKhoahoc &&
-        course.maKhoaHoc !== detailCourse.maKhoaHoc
+        course?.maKhoaHoc !== detailCourse?.maKhoaHoc
     )
     .sort((a, b) => b.luotXem - a.luotXem)
     .slice(0, 5);
